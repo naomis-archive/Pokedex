@@ -69,4 +69,31 @@ var showPokemon = function (pokemon) {
     var output = "\n  <div class=\"card\">\n  <p class=\"card--id\">#" + pokemon.id + "</p>\n  <img class=\"card--image\" src=" + pokemon.image + " alt=" + pokemon.name + ">\n  <p class=\"card--name\">" + pokemon.name + "</p>\n  <p class=\"card--details\">" + pokemon.type + "</p>\n  </div>";
     container.innerHTML += output;
 };
+var getOnePokemon = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var id, data, pokemon, pokemonType, transformedPokemon;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = document.getElementById("pokemon-number");
+                return [4 /*yield*/, fetch("https://pokeapi.co/api/v2/pokemon/" + id.value)];
+            case 1:
+                data = _a.sent();
+                return [4 /*yield*/, data.json()];
+            case 2:
+                pokemon = _a.sent();
+                pokemonType = pokemon.types
+                    .map(function (poke) { return poke.type.name; })
+                    .join(",");
+                transformedPokemon = {
+                    id: pokemon.id,
+                    name: pokemon.name,
+                    image: "" + pokemon.sprites.front_default,
+                    type: pokemonType
+                };
+                container.innerHTML = "";
+                showPokemon(transformedPokemon);
+                return [2 /*return*/];
+        }
+    });
+}); };
 fetchData();

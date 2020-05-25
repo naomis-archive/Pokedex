@@ -40,4 +40,22 @@ const showPokemon = (pokemon: IPokemon): void => {
   container.innerHTML += output;
 };
 
+const getOnePokemon = async (): Promise<void> => {
+  const id: HTMLElement | any = document.getElementById("pokemon-number");
+  const data: Response = await fetch(
+    `https://pokeapi.co/api/v2/pokemon/${id.value}`
+  );
+  const pokemon: any = await data.json();
+  const pokemonType: string = pokemon.types
+    .map((poke: any) => poke.type.name)
+    .join(",");
+  const transformedPokemon = {
+    id: pokemon.id,
+    name: pokemon.name,
+    image: `${pokemon.sprites.front_default}`,
+    type: pokemonType
+  };
+  container.innerHTML = "";
+  showPokemon(transformedPokemon);
+};
 fetchData();

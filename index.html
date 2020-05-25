@@ -8,6 +8,26 @@
   <body>
     <main>
       <h1>Pokedex</h1>
+      <p>
+        This Pokedex contains information for the first 151 Pokemon. You may
+        enter a Pokemon number in the field below to view that specific Pokemon.
+      </p>
+      <p>
+        App created by
+        <a href="https://www.nhcarrigan.com" target="_blank"
+          >Nicholas Carrigan</a
+        >
+        with help from a
+        <a
+          href="https://www.freecodecamp.org/news/a-practical-guide-to-typescript-how-to-build-a-pokedex-app-using-html-css-and-typescript/"
+          target="_blank"
+          >FreeCodeCamp tutorial</a
+        >.
+      </p>
+      <form onsubmit="getOnePokemon();return false;">
+        <input type="text" id="pokemon-number" placeholder="pokemon-number" />
+        <input type="submit" id="submit" value="submit" />
+      </form>
       <div id="app"></div>
     </main>
     <script src="./src/app.js"></script>
