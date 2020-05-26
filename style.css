@@ -1,6 +1,7 @@
 body {
   background-color: lavender;
   text-align: center;
+  font-family: Wallpoet;
 }
 #app {
   display: grid;
@@ -9,7 +10,7 @@ body {
   grid-column-gap: 0px;
 }
 .card {
-  width: 150px;
+  width: 175px;
   height: 200px;
   border-style: solid;
   border-color: purple;
@@ -27,17 +28,19 @@ body {
   border-style: dotted;
   border-color: purple;
   margin-bottom: 0px;
+  max-width: 100px;
+  max-height: 100px;
 }
 
 .card--name {
   margin-top: 0px;
-  font-size: 18pt;
+  font-size: 14pt;
   margin-bottom: 0px;
   font-style: bold;
 }
 
 .card--details {
   margin-top: 0px;
-  font-size: 12pt;
+  font-size: 10pt;
   font-style: italic;
 }

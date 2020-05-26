@@ -9,7 +9,11 @@ interface IPokemon {
 }
 
 const fetchData = (): void => {
-  for (let i = 1; i < pokemons; i++) getPokemon(i);
+  for (let i = 1; i < pokemons; i++) {
+    setTimeout(function() {
+      getPokemon(i);
+    }, 20 * i);
+  }
 };
 
 const getPokemon = async (id: number): Promise<void> => {
@@ -17,7 +21,7 @@ const getPokemon = async (id: number): Promise<void> => {
   const pokemon: any = await data.json();
   const pokemonType: string = pokemon.types
     .map((poke: any) => poke.type.name)
-    .join(",");
+    .join(", ");
 
   const transformedPokemon = {
     id: pokemon.id,
@@ -26,7 +30,7 @@ const getPokemon = async (id: number): Promise<void> => {
     type: pokemonType
   };
 
-  showPokemon(transformedPokemon);
+  await showPokemon(transformedPokemon);
 };
 
 const showPokemon = (pokemon: IPokemon): void => {
@@ -34,7 +38,7 @@ const showPokemon = (pokemon: IPokemon): void => {
   <div class="card">
   <p class="card--id">#${pokemon.id}</p>
   <img class="card--image" src=${pokemon.image} alt=${pokemon.name}>
-  <p class="card--name">${pokemon.name}</p>
+  <p class="card--name">${pokemon.name.toUpperCase()}</p>
   <p class="card--details">${pokemon.type}</p>
   </div>`;
   container.innerHTML += output;

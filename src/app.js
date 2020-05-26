@@ -38,8 +38,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var container = document.getElementById("app");
 var pokemons = 151;
 var fetchData = function () {
-    for (var i = 1; i < pokemons; i++)
-        getPokemon(i);
+    var _loop_1 = function (i) {
+        setTimeout(function () {
+            getPokemon(i);
+        }, 20 * i);
+    };
+    for (var i = 1; i < pokemons; i++) {
+        _loop_1(i);
+    }
 };
 var getPokemon = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var data, pokemon, pokemonType, transformedPokemon;
@@ -53,20 +59,22 @@ var getPokemon = function (id) { return __awaiter(void 0, void 0, void 0, functi
                 pokemon = _a.sent();
                 pokemonType = pokemon.types
                     .map(function (poke) { return poke.type.name; })
-                    .join(",");
+                    .join(", ");
                 transformedPokemon = {
                     id: pokemon.id,
                     name: pokemon.name,
                     image: "" + pokemon.sprites.front_default,
                     type: pokemonType
                 };
-                showPokemon(transformedPokemon);
+                return [4 /*yield*/, showPokemon(transformedPokemon)];
+            case 3:
+                _a.sent();
                 return [2 /*return*/];
         }
     });
 }); };
 var showPokemon = function (pokemon) {
-    var output = "\n  <div class=\"card\">\n  <p class=\"card--id\">#" + pokemon.id + "</p>\n  <img class=\"card--image\" src=" + pokemon.image + " alt=" + pokemon.name + ">\n  <p class=\"card--name\">" + pokemon.name + "</p>\n  <p class=\"card--details\">" + pokemon.type + "</p>\n  </div>";
+    var output = "\n  <div class=\"card\">\n  <p class=\"card--id\">#" + pokemon.id + "</p>\n  <img class=\"card--image\" src=" + pokemon.image + " alt=" + pokemon.name + ">\n  <p class=\"card--name\">" + pokemon.name.toUpperCase() + "</p>\n  <p class=\"card--details\">" + pokemon.type + "</p>\n  </div>";
     container.innerHTML += output;
 };
 var getOnePokemon = function () { return __awaiter(void 0, void 0, void 0, function () {
