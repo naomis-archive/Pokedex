@@ -43,7 +43,7 @@ var fetchData = function () {
             getPokemon(i);
         }, 20 * i);
     };
-    for (var i = 1; i < pokemons; i++) {
+    for (var i = 1; i <= pokemons; i++) {
         _loop_1(i);
     }
     setTimeout(function () { return alert("Ready to Search!"); }, 20 * 152);

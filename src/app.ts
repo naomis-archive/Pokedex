@@ -9,7 +9,7 @@ interface IPokemon {
 }
 
 const fetchData = (): void => {
-  for (let i = 1; i < pokemons; i++) {
+  for (let i = 1; i <= pokemons; i++) {
     setTimeout(function() {
       getPokemon(i);
     }, 20 * i);
