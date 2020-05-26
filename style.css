@@ -44,3 +44,7 @@ body {
   font-size: 10pt;
   font-style: italic;
 }
+
+form {
+  margin-bottom: 5px;
+}

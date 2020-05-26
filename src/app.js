@@ -46,6 +46,7 @@ var fetchData = function () {
     for (var i = 1; i < pokemons; i++) {
         _loop_1(i);
     }
+    setTimeout(function () { return alert("Ready to Search!"); }, 20 * 152);
 };
 var getPokemon = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var data, pokemon, pokemonType, transformedPokemon;
@@ -91,7 +92,35 @@ var getOnePokemon = function () { return __awaiter(void 0, void 0, void 0, funct
                 pokemon = _a.sent();
                 pokemonType = pokemon.types
                     .map(function (poke) { return poke.type.name; })
-                    .join(",");
+                    .join(", ");
+                transformedPokemon = {
+                    id: pokemon.id,
+                    name: pokemon.name,
+                    image: "" + pokemon.sprites.front_default,
+                    type: pokemonType
+                };
+                container.innerHTML = "";
+                showPokemon(transformedPokemon);
+                return [2 /*return*/];
+        }
+    });
+}); };
+var getPokemonByName = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var name, data, pokemon, pokemonType, transformedPokemon;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                name = document.getElementById("pokemon-name");
+                return [4 /*yield*/, fetch("https://pokeapi.co/api/v2/pokemon/" + name.value.toLowerCase())];
+            case 1:
+                data = _a.sent();
+                return [4 /*yield*/, data.json()];
+            case 2:
+                pokemon = _a.sent();
+                pokemonType = pokemon.types
+                    .map(function (poke) { return poke.type.name; })
+                    .join(", ");
+                console.log(data.status);
                 transformedPokemon = {
                     id: pokemon.id,
                     name: pokemon.name,
