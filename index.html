@@ -30,11 +30,17 @@
         >.
       </p>
       <form onsubmit="getOnePokemon();return false;">
-        <input type="text" id="pokemon-number" placeholder="25" />
+        <label for="pokemon-number"
+          >Pokemon Number:
+          <input type="text" id="pokemon-number" placeholder="25"
+        /></label>
         <input type="submit" value="submit" />
       </form>
       <form onsubmit="getPokemonByName();return false;">
-        <input type="text" id="pokemon-name" placeholder="Pikachu" />
+        <label for="pokemon-name"
+          >Pokemon Name:
+          <input type="text" id="pokemon-name" placeholder="Pikachu"
+        /></label>
         <input type="submit" value="submit" />
       </form>
       <div id="app"></div>
