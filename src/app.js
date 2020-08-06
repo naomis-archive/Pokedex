@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,50 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var container = document.getElementById("app");
-var pokemons = 151;
-var fetchData = function () {
-    var _loop_1 = function (i) {
-        setTimeout(function () {
-            getPokemon(i);
-        }, 20 * i);
-    };
-    for (var i = 1; i <= pokemons; i++) {
-        _loop_1(i);
-    }
-    setTimeout(function () { return alert("Ready to Search!"); }, 20 * 152);
-};
-var getPokemon = function (id) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, pokemon, pokemonType, transformedPokemon;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, fetch("https://pokeapi.co/api/v2/pokemon/" + id)];
-            case 1:
-                data = _a.sent();
-                return [4 /*yield*/, data.json()];
-            case 2:
-                pokemon = _a.sent();
-                pokemonType = pokemon.types
-                    .map(function (poke) { return poke.type.name; })
-                    .join(", ");
-                transformedPokemon = {
-                    id: pokemon.id,
-                    name: pokemon.name,
-                    image: "" + pokemon.sprites.front_default,
-                    type: pokemonType
-                };
-                return [4 /*yield*/, showPokemon(transformedPokemon)];
-            case 3:
-                _a.sent();
-                return [2 /*return*/];
-        }
-    });
-}); };
-var showPokemon = function (pokemon) {
-    var output = "\n  <div class=\"card\">\n  <p class=\"card--id\">#" + pokemon.id + "</p>\n  <img class=\"card--image\" src=" + pokemon.image + " alt=" + pokemon.name + ">\n  <p class=\"card--name\">" + pokemon.name.toUpperCase() + "</p>\n  <p class=\"card--details\">" + pokemon.type + "</p>\n  </div>";
-    container.innerHTML += output;
-};
 var getOnePokemon = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var id, data, pokemon, pokemonType, transformedPokemon;
+    var id, data, pokemon;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -90,23 +47,13 @@ var getOnePokemon = function () { return __awaiter(void 0, void 0, void 0, funct
                 return [4 /*yield*/, data.json()];
             case 2:
                 pokemon = _a.sent();
-                pokemonType = pokemon.types
-                    .map(function (poke) { return poke.type.name; })
-                    .join(", ");
-                transformedPokemon = {
-                    id: pokemon.id,
-                    name: pokemon.name,
-                    image: "" + pokemon.sprites.front_default,
-                    type: pokemonType
-                };
-                container.innerHTML = "";
-                showPokemon(transformedPokemon);
+                parsePokemon(pokemon);
                 return [2 /*return*/];
         }
     });
 }); };
 var getPokemonByName = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var name, data, pokemon, pokemonType, transformedPokemon;
+    var name, data, pokemon;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -117,20 +64,61 @@ var getPokemonByName = function () { return __awaiter(void 0, void 0, void 0, fu
                 return [4 /*yield*/, data.json()];
             case 2:
                 pokemon = _a.sent();
-                pokemonType = pokemon.types
-                    .map(function (poke) { return poke.type.name; })
-                    .join(", ");
-                console.log(data.status);
-                transformedPokemon = {
-                    id: pokemon.id,
-                    name: pokemon.name,
-                    image: "" + pokemon.sprites.front_default,
-                    type: pokemonType
-                };
-                container.innerHTML = "";
-                showPokemon(transformedPokemon);
+                parsePokemon(pokemon);
                 return [2 /*return*/];
         }
     });
 }); };
-fetchData();
+var parsePokemon = function (pokemon) { return __awaiter(void 0, void 0, void 0, function () {
+    var pokemonType, pokemonAbility, pokemonMoves, pokemonStats, pokemonItems, transformedPokemon;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                pokemonType = pokemon.types
+                    .map(function (el) { return el.type.name; })
+                    .join(", ");
+                pokemonAbility = pokemon.abilities
+                    .map(function (el) { return el.ability.name; })
+                    .join(", ");
+                pokemonMoves = pokemon.moves
+                    .map(function (el) { return el.move.name; })
+                    .join(", ");
+                pokemonStats = pokemon.stats
+                    .map(function (el) { return el.stat.name + " - " + el.base_stat; })
+                    .join(", ");
+                pokemonItems = pokemon.held_items
+                    .map(function (el) { return el.item.name; })
+                    .join(", ");
+                transformedPokemon = {
+                    id: pokemon.id,
+                    name: pokemon.name,
+                    image: pokemon.sprites.front_default,
+                    femaleImage: pokemon.sprites.front_female,
+                    shinyImage: pokemon.sprites.front_shiny,
+                    dreamImage: pokemon.sprites.other.dream_world.front_default,
+                    type: pokemonType,
+                    ability: pokemonAbility,
+                    moves: pokemonMoves,
+                    stats: pokemonStats,
+                    items: pokemonItems,
+                    height: pokemon.height,
+                    weight: pokemon.weight,
+                };
+                return [4 /*yield*/, showPokemon(transformedPokemon)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
+var showPokemon = function (pokemon) {
+    var images = "<img class=\"card--image\" src=" + pokemon.image + " title=\"Normal\">";
+    if (pokemon.femaleImage)
+        images += "<img class=\"card--image\" src=" + pokemon.femaleImage + " title=\"Female\">";
+    if (pokemon.shinyImage)
+        images += "<img class=\"card--image\" src=" + pokemon.shinyImage + " title=\"Shiny\">";
+    if (pokemon.dreamImage)
+        images += "<img class=\"card--image\" src=" + pokemon.dreamImage + " title=\"Dream World\">";
+    var output = "\n  <div class=\"card\">\n  <p class=\"card--id\">#" + pokemon.id + "</p>\n  " + images + "\n  <p class=\"card--name\">" + pokemon.name.toUpperCase() + "</p>\n  <p class=\"card--details\">Types: " + pokemon.type + "</p>\n  <p class=\"card--details\">Abilities: " + pokemon.ability + "</p>\n  <p class=\"card--details\">Moves: " + pokemon.moves + "</p>\n  <p class=\"card--details\">Base Stats: " + pokemon.stats + "</p>\n  <p class=\"card--details\">Items: " + pokemon.items + "</p>\n  <p class=\"card--details\">Height: " + pokemon.height + " | Weight: " + pokemon.weight + "</p>\n  </div>";
+    container.innerHTML = output;
+};

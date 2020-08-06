@@ -1,67 +1,14 @@
+import { PokemonInt, TransformedPokemonInt } from "./PokemonInt";
+
 const container: HTMLElement | any = document.getElementById("app");
-const pokemons: number = 151;
-
-interface IPokemon {
-  id: number;
-  name: string;
-  image: string;
-  type: string;
-}
-
-const fetchData = (): void => {
-  for (let i = 1; i <= pokemons; i++) {
-    setTimeout(function() {
-      getPokemon(i);
-    }, 20 * i);
-  }
-  setTimeout(() => alert("Ready to Search!"), 20 * 152);
-};
-
-const getPokemon = async (id: number): Promise<void> => {
-  const data: Response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-  const pokemon: any = await data.json();
-  const pokemonType: string = pokemon.types
-    .map((poke: any) => poke.type.name)
-    .join(", ");
-
-  const transformedPokemon = {
-    id: pokemon.id,
-    name: pokemon.name,
-    image: `${pokemon.sprites.front_default}`,
-    type: pokemonType
-  };
-
-  await showPokemon(transformedPokemon);
-};
-
-const showPokemon = (pokemon: IPokemon): void => {
-  let output: string = `
-  <div class="card">
-  <p class="card--id">#${pokemon.id}</p>
-  <img class="card--image" src=${pokemon.image} alt=${pokemon.name}>
-  <p class="card--name">${pokemon.name.toUpperCase()}</p>
-  <p class="card--details">${pokemon.type}</p>
-  </div>`;
-  container.innerHTML += output;
-};
 
 const getOnePokemon = async (): Promise<void> => {
   const id: HTMLElement | any = document.getElementById("pokemon-number");
   const data: Response = await fetch(
     `https://pokeapi.co/api/v2/pokemon/${id.value}`
   );
-  const pokemon: any = await data.json();
-  const pokemonType: string = pokemon.types
-    .map((poke: any) => poke.type.name)
-    .join(", ");
-  const transformedPokemon = {
-    id: pokemon.id,
-    name: pokemon.name,
-    image: `${pokemon.sprites.front_default}`,
-    type: pokemonType
-  };
-  container.innerHTML = "";
-  showPokemon(transformedPokemon);
+  const pokemon: PokemonInt = await data.json();
+  parsePokemon(pokemon);
 };
 
 const getPokemonByName = async (): Promise<void> => {
@@ -69,20 +16,66 @@ const getPokemonByName = async (): Promise<void> => {
   const data: Response = await fetch(
     `https://pokeapi.co/api/v2/pokemon/${name.value.toLowerCase()}`
   );
-  const pokemon: any = await data.json();
+  const pokemon: PokemonInt = await data.json();
+  parsePokemon(pokemon);
+};
+
+const parsePokemon = async (pokemon: PokemonInt): Promise<void> => {
   const pokemonType: string = pokemon.types
-    .map((poke: any) => poke.type.name)
+    .map((el: any) => el.type.name)
     .join(", ");
-  console.log(data.status);
+  const pokemonAbility: string = pokemon.abilities
+    .map((el: any) => el.ability.name)
+    .join(", ");
+  const pokemonMoves: string = pokemon.moves
+    .map((el: any) => el.move.name)
+    .join(", ");
+  const pokemonStats: string = pokemon.stats
+    .map((el) => `${el.stat.name} - ${el.base_stat}`)
+    .join(", ");
+  const pokemonItems: string = pokemon.held_items
+    .map((el) => el.item.name)
+    .join(", ");
+
   const transformedPokemon = {
     id: pokemon.id,
     name: pokemon.name,
-    image: `${pokemon.sprites.front_default}`,
-    type: pokemonType
+    image: pokemon.sprites.front_default,
+    femaleImage: pokemon.sprites.front_female,
+    shinyImage: pokemon.sprites.front_shiny,
+    dreamImage: pokemon.sprites.other.dream_world.front_default,
+    type: pokemonType,
+    ability: pokemonAbility,
+    moves: pokemonMoves,
+    stats: pokemonStats,
+    items: pokemonItems,
+    height: pokemon.height,
+    weight: pokemon.weight,
   };
-
-  container.innerHTML = "";
-  showPokemon(transformedPokemon);
+  await showPokemon(transformedPokemon);
 };
 
-fetchData();
+const showPokemon = (pokemon: TransformedPokemonInt): void => {
+  let images: string = `<img class="card--image" src=${pokemon.image} title="Normal">`;
+  if (pokemon.femaleImage)
+    images += `<img class="card--image" src=${pokemon.femaleImage} title="Female">`;
+  if (pokemon.shinyImage)
+    images += `<img class="card--image" src=${pokemon.shinyImage} title="Shiny">`;
+  if (pokemon.dreamImage)
+    images += `<img class="card--image" src=${pokemon.dreamImage} title="Dream World">`;
+  let output: string = `
+  <div class="card">
+  <p class="card--id">#${pokemon.id}</p>
+  ${images}
+  <p class="card--name">${pokemon.name.toUpperCase()}</p>
+  <p class="card--details">Types: ${pokemon.type}</p>
+  <p class="card--details">Abilities: ${pokemon.ability}</p>
+  <p class="card--details">Moves: ${pokemon.moves}</p>
+  <p class="card--details">Base Stats: ${pokemon.stats}</p>
+  <p class="card--details">Items: ${pokemon.items}</p>
+  <p class="card--details">Height: ${pokemon.height} | Weight: ${
+    pokemon.weight
+  }</p>
+  </div>`;
+  container.innerHTML = output;
+};

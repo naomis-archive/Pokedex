@@ -1,0 +1,19 @@
+{
+  "name": "pokedex",
+  "version": "1.0.0",
+  "description": "A Pokedex App",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhcarrigan/Pokedex.git"
+  },
+  "author": "Nicholas Carrigan",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/nhcarrigan/Pokedex/issues"
+  },
+  "homepage": "https://github.com/nhcarrigan/Pokedex#readme",
+  "dependencies": {
+    "typescript": "^3.9.7"
+  }
+}

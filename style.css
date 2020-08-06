@@ -3,19 +3,14 @@ body {
   text-align: center;
   font-family: Wallpoet;
 }
-#app {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  column-gap: 0px;
-  grid-column-gap: 0px;
-}
+
 .card {
-  width: 175px;
-  height: 200px;
+  margin: auto;
+  width: 400px;
+  height: 600px;
   border-style: solid;
   border-color: purple;
   text-align: center;
-  margin: 0px 0px 0px 0px;
 }
 
 .card--id {
