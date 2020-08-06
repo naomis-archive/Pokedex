@@ -1,16 +1,23 @@
 body {
-  background-color: lavender;
+  background-color: #40304f;
   text-align: center;
   font-family: Wallpoet;
+  color: #ffffff;
+}
+
+a {
+  color: #ffffff;
 }
 
 .card {
   margin: auto;
-  width: 400px;
+  width: 500px;
   min-height: 600px;
   border-style: solid;
   border-color: purple;
   text-align: center;
+  color: #000000;
+  background-color: #dcbbfa;
 }
 
 .card--id {
@@ -23,8 +30,8 @@ body {
   border-style: dotted;
   border-color: purple;
   margin-bottom: 0px;
-  max-width: 100px;
-  max-height: 100px;
+  width: 100px;
+  height: 100px;
 }
 
 .card--name {
@@ -42,4 +49,9 @@ body {
 
 form {
   margin-bottom: 5px;
+}
+
+input {
+  background-color:#40304f;
+  color: #ffffff
 }

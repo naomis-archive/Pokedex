@@ -44,6 +44,8 @@ var getOnePokemon = function () { return __awaiter(void 0, void 0, void 0, funct
                 return [4 /*yield*/, fetch("https://pokeapi.co/api/v2/pokemon/" + id.value)];
             case 1:
                 data = _a.sent();
+                if (data.status === 404)
+                    return [2 /*return*/, missingNo()];
                 return [4 /*yield*/, data.json()];
             case 2:
                 pokemon = _a.sent();
@@ -64,6 +66,8 @@ var getPokemonByName = function () { return __awaiter(void 0, void 0, void 0, fu
                 return [4 /*yield*/, data.json()];
             case 2:
                 pokemon = _a.sent();
+                if (data.status === 404)
+                    return [2 /*return*/, missingNo()];
                 parsePokemon(pokemon);
                 return [2 /*return*/];
         }
@@ -120,5 +124,9 @@ var showPokemon = function (pokemon) {
     if (pokemon.dreamImage)
         images += "<img class=\"card--image\" src=" + pokemon.dreamImage + " title=\"Dream World\">";
     var output = "\n  <div class=\"card\">\n  <p class=\"card--id\">#" + pokemon.id + "</p>\n  " + images + "\n  <p class=\"card--name\">" + pokemon.name.toUpperCase() + "</p>\n  <p class=\"card--details\">Types: " + pokemon.type + "</p>\n  <p class=\"card--details\">Abilities: " + pokemon.ability + "</p>\n  <p class=\"card--details\">Moves: " + pokemon.moves + "</p>\n  <p class=\"card--details\">Base Stats: " + pokemon.stats + "</p>\n  <p class=\"card--details\">Items: " + pokemon.items + "</p>\n  <p class=\"card--details\">Height: " + pokemon.height + " | Weight: " + pokemon.weight + "</p>\n  </div>";
+    container.innerHTML = output;
+};
+var missingNo = function () {
+    var output = "\n  <div class=\"card\">\n  <p class=\"card-id\">#0</p>\n  <img class=\"card--image\" src=\"./src/img/missingno.png\" title=\"Data Not Found\">\n  <p class=\"card--name\">ERROR: MISSING NO.</p>\n  <p class=\"card--details\">Types: unknown</p>\n  <p class=\"card--details\">Abilities: unknown</p>\n  <p class=\"card--details\">Moves: unknown</p>\n  <p class=\"card--details\">Base Stats: unknown</p>\n  <p class=\"card--details\">Items: unknown</p>\n  <p class=\"card--details\">Height: unknown | Weight: unknown</p>\n  </div>\n  ";
     container.innerHTML = output;
 };

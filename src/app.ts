@@ -7,6 +7,7 @@ const getOnePokemon = async (): Promise<void> => {
   const data: Response = await fetch(
     `https://pokeapi.co/api/v2/pokemon/${id.value}`
   );
+  if (data.status === 404) return missingNo();
   const pokemon: PokemonInt = await data.json();
   parsePokemon(pokemon);
 };
@@ -17,6 +18,7 @@ const getPokemonByName = async (): Promise<void> => {
     `https://pokeapi.co/api/v2/pokemon/${name.value.toLowerCase()}`
   );
   const pokemon: PokemonInt = await data.json();
+  if (data.status === 404) return missingNo();
   parsePokemon(pokemon);
 };
 
@@ -63,7 +65,7 @@ const showPokemon = (pokemon: TransformedPokemonInt): void => {
     images += `<img class="card--image" src=${pokemon.shinyImage} title="Shiny">`;
   if (pokemon.dreamImage)
     images += `<img class="card--image" src=${pokemon.dreamImage} title="Dream World">`;
-  let output: string = `
+  const output: string = `
   <div class="card">
   <p class="card--id">#${pokemon.id}</p>
   ${images}
@@ -77,5 +79,22 @@ const showPokemon = (pokemon: TransformedPokemonInt): void => {
     pokemon.weight
   }</p>
   </div>`;
+  container.innerHTML = output;
+};
+
+const missingNo = () => {
+  const output: string = `
+  <div class="card">
+  <p class="card-id">#0</p>
+  <img class="card--image" src="./src/img/missingno.png" title="Data Not Found">
+  <p class="card--name">ERROR: MISSING NO.</p>
+  <p class="card--details">Types: unknown</p>
+  <p class="card--details">Abilities: unknown</p>
+  <p class="card--details">Moves: unknown</p>
+  <p class="card--details">Base Stats: unknown</p>
+  <p class="card--details">Items: unknown</p>
+  <p class="card--details">Height: unknown | Weight: unknown</p>
+  </div>
+  `;
   container.innerHTML = output;
 };
