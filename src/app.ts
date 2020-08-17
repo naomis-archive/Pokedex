@@ -5,7 +5,7 @@ const container: HTMLElement | any = document.getElementById("app");
 const getOnePokemon = async (): Promise<void> => {
   const id: HTMLElement | any = document.getElementById("pokemon-number");
   const data: Response = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${id.value}`
+    `https://pokeapi.co/api/v2/pokemon/${parseInt(id.value).toString()}`
   );
   if (data.status === 404) return missingNo();
   const pokemon: PokemonInt = await data.json();

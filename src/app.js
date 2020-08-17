@@ -41,7 +41,7 @@ var getOnePokemon = function () { return __awaiter(void 0, void 0, void 0, funct
         switch (_a.label) {
             case 0:
                 id = document.getElementById("pokemon-number");
-                return [4 /*yield*/, fetch("https://pokeapi.co/api/v2/pokemon/" + id.value)];
+                return [4 /*yield*/, fetch("https://pokeapi.co/api/v2/pokemon/" + parseInt(id.value).toString())];
             case 1:
                 data = _a.sent();
                 if (data.status === 404)
