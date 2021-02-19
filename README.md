@@ -7,7 +7,7 @@ This page uses the [Pokemon API](https://pokeapi.co/) to search for a Pokemon by
 
 ## Live Version
 
-This page is currently deployed. [View the live website.](https://www.nhcarrigan.com/Pokedex)
+This project is archived and thus is not deployed.
 
 ## Feedback and Bugs
 
